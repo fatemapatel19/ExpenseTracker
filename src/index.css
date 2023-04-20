@@ -12,46 +12,132 @@ code {
     monospace;
 }
 
-.forum{
-  display: flex;
-  flex-direction: column;
+/* 
+.Loader{
+  position: absolute;
+  inset: 0;
+  height: 100vh;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  font-family: "Inter";
+  display: flex;
+  z-index: 9999 !important;
+  background-color: rgba(255, 255, 255, 0.644)
 }
 
-.income-expense{
+
+.justify-between {
+  justify-content: space-between;
+}
+
+
+.flex {
   display: flex;
+}
+
+
+.h-screen {
+  height: 100vh;
+}
+
+
+.justify-center {
+  justify-content: center;
+}
+
+
+.items-center {
+  align-items: center;
+}
+
+.items-end {
+  align-items: flex-end;
+
+}
+
+.w-50{
+
+  width: 50%;
+}
+
+.w-100{
+
+  width: 100%;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+
+*{
+  font-family: 'Montserrat', sans-serif !important;
+}
+.h-screen {
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+.flex-column {
   flex-direction: column;
 }
 
-.income-expense > h1 {
-  font-size: 35px ;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  letter-spacing: -1px;
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-end {
+  justify-content: flex-end;
 }
 
-.income-expense > input{
-  min-width: 380px;
-  padding: 20px 0;
-  padding-left: 15px;
-  margin-bottom: 10px;
-  outline: none;
-  border: 1px solid black(0,0,0,0.24);
-  font-family: "Inter";
-  border-radius: 2px;
-  font-size: 15px;
+.items-center {
+  align-items: center;
+}
+.items-end {
+  align-items: flex-end;
 }
 
-.submit_btn{
-  padding: 17px 170px;
-  margin-top: 10px;
-  background: black;
-  border: none;
-  color: white;
-  font-size: 14px;
-  font-family: "Inter";
-  border-radius: 3px;
+
+.loader-parent{
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  z-index: 9999 !important;
+  background-color: rgba(255, 255, 255, 0.499);
 }
+
+.w-50{
+  width: 50%;
+}
+.w-100{
+  width: 100%;
+}
+
+i{
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+input{
+   border : 1px solid rgb(79, 83, 83) !important;
+}
+
+.container{
+  height: 85vh !important;
+}
+
+.mantine-xoj88x{
+  height: 100% !important;
+  overflow: scroll !important;
+}
+
+.auth{
+  background-color: #12B886;
+}
+
+
+

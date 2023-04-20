@@ -1,14 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
+import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import store from './redux/store';
+import { Provider } from 'react-redux';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <MantineProvider withGlobalStyles withNormalizeCSS>
+    <Notifications position='top-center' />
+    <Provider store ={store}>
+      <App />
+    </Provider>
+  </MantineProvider >
 );
 
 reportWebVitals();
