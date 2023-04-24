@@ -20,9 +20,9 @@ function App() {
       
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
-          <Route path="/GetStarted" element={<PublicRoute> <GetStarted /> </PublicRoute>} />
-          <Route path="Register" element={<PublicRoute> <Register /> </PublicRoute>} />
+          <Route path="/" element={<ProtectedRoute> <Home/> </ProtectedRoute>} />
+          <Route path="/GetStarted" element={<PublicRoute> <GetStarted/> </PublicRoute>} />
+          <Route path="Register" element={<PublicRoute> <Register/> </PublicRoute>} />
         </Routes>
       </BrowserRouter>
     </div>
