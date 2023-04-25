@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { Box, Card, Button, Modal, Group, Divider } from "@mantine/core";
 import TransactionForm from "../components/TransactionForm";
 import { useDispatch } from "react-redux";
-import { fireDb } from "../FirebaseConfig";
+import { fireDb } from "../firebaseConfig";
 import { showNotification } from "@mantine/notifications";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
@@ -13,7 +13,6 @@ import moment from "moment";
 import Analytics from "../components/Analytics";
 
 function Home() {
-
   const [view, setView] = React.useState("table");
   const [filters, setFilters] = React.useState({
     type: "",
@@ -30,12 +29,12 @@ function Home() {
   const getWhereConditions = () => {
     const tempConditions = [];
 
-    // logic for type condition
+    // type condition
     if (filters.type !== "") {
       tempConditions.push(where("type", "==", filters.type));
     }
 
-    // logic for frequency condition
+    // frequency condition
     if (filters.frequency !== "custom-range") {
       if (filters.frequency === "7") {
         tempConditions.push(
@@ -96,9 +95,9 @@ function Home() {
     }
   };
 
-  // useEffect(() => {
-  //   getData();
-  // }, [filters]);
+  useEffect(() => {
+    getData();
+  }, [filters]);
 
   return (
     <Box
@@ -122,7 +121,7 @@ function Home() {
                   variant={view === "table" ? "filled" : "outline"}
                   onClick={() => setView("table")}
                 >
-                  Grid
+                  Transaction History
                 </Button>
                 <Button
                   color="blue"

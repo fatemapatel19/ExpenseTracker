@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import { showNotification } from "@mantine/notifications";
 import { deleteDoc, doc } from "firebase/firestore";
-import { fireDb } from "../FirebaseConfig";
+import { fireDb } from "../firebaseConfig";
 
 function TransactionTable({
   transactions,

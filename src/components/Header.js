@@ -9,7 +9,7 @@ function Header() {
        shadow='md'
        p={20}
        withBorder
-       color="green"
+       color=""
       >
         <div className="flex justify-between">
             <Text

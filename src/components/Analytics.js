@@ -7,6 +7,7 @@ import { Progress } from "@mantine/core";
 function Analytics({ transactions }) {
   const totalTransactions = transactions.length;
 
+  // transactions count
   const totalIncomeTransactions = transactions.filter(
     (transaction) => transaction.type === "income"
   ).length;
@@ -18,7 +19,7 @@ function Analytics({ transactions }) {
   const totalExpenseTransactionsPercentage =
     (totalExpenseTransactions / totalTransactions) * 100;
 
- 
+  // total amount
   const totalAmount = transactions.reduce((acc, transaction) => {
     return acc + Number(transaction.amount);
   }, 0);

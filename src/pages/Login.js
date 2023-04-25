@@ -1,80 +1,81 @@
 import React from "react";
 import { useForm } from "@mantine/form";
 import {
+  Anchor,
   Button,
   Card,
   Divider,
   Stack,
   TextInput,
   Title,
-  Anchor,
 } from "@mantine/core";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { fireDb } from "../firebaseConfig";
 import cryptojs from "crypto-js";
 import { showNotification } from "@mantine/notifications";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 
-function Register() {
+function Login() {
   const dispatch = useDispatch();
-  const registerForm = useForm({
+  const navigate = useNavigate();
+  const loginForm = useForm({
     initialValues: {
       name: "",
       email: "",
       password: "",
     },
   });
-
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      // check if user already exists based on email
-      dispatch(ShowLoading());
+       dispatch(ShowLoading())
       const qry = query(
         collection(fireDb, "users"),
-        where("email", "==", registerForm.values.email)
+        where("email", "==", loginForm.values.email)
       );
       const existingUsers = await getDocs(qry);
-
       if (existingUsers.size > 0) {
-        console.log(existingUsers);
-        showNotification({
-          title: "User already exists",
-          color: "red",
-        });
-        return;
-      } else {
-        // encrypt password
-        const encryptedPassword = cryptojs.AES.encrypt(
-          registerForm.values.password,
+        // decrypt password
+        const decryptedPassword = cryptojs.AES.decrypt(
+          existingUsers.docs[0].data().password,
           "Expenso"
-        ).toString();
-        const response = await addDoc(collection(fireDb, "users"), {
-          ...registerForm.values,
-          password: encryptedPassword,
-        });
-        if (response.id) {
+        ).toString(cryptojs.enc.Utf8);
+        if (decryptedPassword === loginForm.values.password) {
           showNotification({
-            title: "User created successfully",
+            title: "Login successful",
             color: "green",
           });
+          const dataToPutInLocalStorage = {
+            name: existingUsers.docs[0].data().name,
+            email: existingUsers.docs[0].data().email,
+            id: existingUsers.docs[0].id,
+          };
+          localStorage.setItem("user", JSON.stringify(dataToPutInLocalStorage));
+          navigate("/");
         } else {
           showNotification({
-            title: "Something went wrong",
+            title: "Invalid credentials",
             color: "red",
           });
         }
+      } else {
+        showNotification({
+          title: "User does not exist",
+          color: "red",
+        });
       }
-      dispatch(HideLoading());
+      dispatch(HideLoading())
     } catch (error) {
-      dispatch(HideLoading());
+      dispatch(HideLoading())
       showNotification({
         title: "Something went wrong",
         color: "red",
       });
     }
   };
+
   return (
     <div className="flex h-screen justify-center items-center auth">
       <Card
@@ -85,37 +86,33 @@ function Register() {
         shadow="lg"
         withBorder
       >
-        <Title order={2} mb={5} color='gray'>
-           EXPENSO - REGISTER
+        <Title order={2} mb={5}
+         color="gray"
+        >
+           EXPENSO - LOGIN 
         </Title>
         <Divider variant="dotted" color="gray" />
         <form action="" onSubmit={onSubmit}>
           <Stack mt={5}>
             <TextInput
-              label="Name"
-              placeholder="Enter your name"
-              name="name"
-              {...registerForm.getInputProps("name")}
-            />
-            <TextInput
               label="Email"
               placeholder="Enter your email"
               name="email"
-              {...registerForm.getInputProps("email")}
+              {...loginForm.getInputProps("email")}
             />
             <TextInput
               label="Password"
               placeholder="Enter your password"
-              name="password"
               type="password"
-              {...registerForm.getInputProps("password")}
+              name="password"
+              {...loginForm.getInputProps("password")}
             />
             <Button type="submit" color="teal">
-              Register
+              Login
             </Button>
-            <Anchor href="/login"
-              color='teal'
-            >Already have an account? Login</Anchor>
+            <Anchor href="/register" 
+             color='teal'
+            >Don't have an account? Register</Anchor>
           </Stack>
         </form>
       </Card>
@@ -123,4 +120,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

@@ -3,7 +3,7 @@ import {  } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyClepOaGsnIet8-MwzGc352dcfko2y5CqY",
+  apiKey: "AIzaSyClepOaGsnIet8-MwzGc352dcfkoy5CqY",
   authDomain: "expensetracker-962d6.firebaseapp.com",
   projectId: "expensetracker-962d6",
   storageBucket: "expensetracker-962d6.appspot.com",

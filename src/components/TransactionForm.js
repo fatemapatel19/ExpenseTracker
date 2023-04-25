@@ -1,144 +1,148 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "@mantine/form";
-import { Stack, TextInput, Select, Button } from "@mantine/core";
-import { addDoc, collection } from "firebase/firestore";
+import { Select, Stack, TextInput, Button, Group } from "@mantine/core";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
-import { fireDb } from "../FirebaseConfig";
-import { Notifications } from "@mantine/notifications";
+import { fireDb } from "../firebaseConfig";
+import { showNotification } from "@mantine/notifications";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
-
+import moment from "moment";
 
 function TransactionForm({
-    formMode,
-    setFormMode,
-    setShowForm,
-    showForm,
-}
-) {
-    const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem("user"));
-    const transactionForm = useForm({
-        initialValues: {
-            name: "",
-            type: "",
-            amount: "",
-            date: "",
-            category: "",
-            reference: "",
-        },
-    });
-    const onSubmit = async (event) => {
-        event.preventDefault();
+  formMode,
+  setFormMode,
+  setShowForm,
+  transactionData,
+  getData,
+}) {
+  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("user"));
+  const trasactionForm = useForm({
+    initialValues: {
+      name: "",
+      type: "",
+      amount: "",
+      date: "",
+      category: "",
+      reference: "",
+    },
+  });
 
-//try catch block used to call API
-        try {
-            dispatch(ShowLoading())
-            await addDoc(
-                collection(fireDb,
-                    `users/${user.id}/transactions`), transactionForm.values
+  const onSubmit = async (event) => {
+    event.preventDefault();
 
-            );
+    try {
+      dispatch(ShowLoading());
+      if(formMode === "add") 
+      {
+        await addDoc(
+          collection(fireDb, `users/${user.id}/transactions`),
+          trasactionForm.values
+        );
+      }else{
+        await setDoc(
+          doc(fireDb, `users/${user.id}/transactions`, transactionData.id),
+          trasactionForm.values
+        );
+      }
+    
+      showNotification({
+        title: formMode === "add" ? "Transaction added" : "Transaction updated",
+        color: "green",
+      });
+      dispatch(HideLoading());
+      getData()
+      setShowForm(false);
+    } catch (error) {
+      showNotification({
+        title: formMode === "add" ? "Error adding transaction" : "Error updating transaction",
+        color: "red",
+      });
+      dispatch(HideLoading());
+    }
+  };
 
-            Notifications.show({
-                title: "Transaction done Successfully",
-                color: "teal",
-            })
-            dispatch(HideLoading())
-            setShowForm(false);
+  useEffect(() => {
+    if (formMode === "edit") {
+      trasactionForm.setValues(transactionData);
+      trasactionForm.setFieldValue(
+        "date",
+        moment(transactionData.date, "YYYY-MM-DD").format("YYYY-MM-DD")
+      );
+    }
+  }, [transactionData]);
 
-        } catch (error) {
+  return (
+    <div>
+      <form action="" onSubmit={onSubmit}>
+        <Stack>
+          <TextInput
+            name="name"
+            label="Name"
+            placeholder="Enter Transaction Name"
+            {...trasactionForm.getInputProps("name")}
+          />
+          <Group position="apart" grow>
+            <Select
+              name="type"
+              label="Type"
+              placeholder="Select Transaction Type"
+              data={[
+                { label: "Income", value: "income" },
+                { label: "Expense", value: "expense" },
+              ]}
+              {...trasactionForm.getInputProps("type")}
+            />
 
-            Notifications.show ({
-                title: "Error adding transaction",
-                color: "red",
-            })
+            <Select
+              name="category"
+              label="Category"
+              placeholder="Select Transaction Category"
+              data={[
+                { label: "Food", value: "food" },
+                { label: "Transport", value: "transport" },
+                { label: "Shopping", value: "shopping" },
+                { label: "Entertainment", value: "entertainment" },
+                { label: "Health", value: "health" },
+                { label: "Education", value: "education" },
+                { label: "Salary", value: "salary" },
+                { label: "Freelance", value: "freelance" },
+                { label: "Business", value: "Business" },
+              ]}
+              {...trasactionForm.getInputProps("category")}
+            />
+          </Group>
+          <Group grow>
+            <TextInput
+              name="amount"
+              label="Amount"
+              placeholder="Enter Transaction Amount"
+              {...trasactionForm.getInputProps("amount")}
+            />
 
-            dispatch(HideLoading())
+            <TextInput
+              name="date"
+              label="Date"
+              type="date"
+              placeholder="Enter Transaction Date"
+              {...trasactionForm.getInputProps("date")}
+            />
+          </Group>
 
-        }
-    };
+          <TextInput
+            name="reference"
+            label="Reference"
+            placeholder="Enter Transaction Reference"
+            {...trasactionForm.getInputProps("reference")}
+          />
 
-    return (
-        <div>
-            <form action=""
-                onSubmit={onSubmit}>
-
-                <Stack>
-                    <TextInput
-                        name="name"
-                        label="Name"
-                        placeholder="Enter Transaction Name"
-                        {...transactionForm.getInputProps("name")}
-                    />
-                    <div className="flex justify-between"></div>
-                    <TextInput
-                        width="60%"
-                        name="amount"
-                        label="Amount"
-                        placeholder=" Enter Transaction Amount"
-                        {...transactionForm.getInputProps("amount")}
-
-                    />
-                    <Select
-                        name="type"
-                        label="Type"
-                        placeholder="Select Transaction Type"
-                        data={[
-                            { value: "income", label: "Income" },
-                            { value: "expense", label: "Expense" },
-                        ]}
-                    />
-                    <div className="flex justify-between">
-
-                        <Select
-                            className="w-100"
-                            name="category"
-                            label="Category"
-                            placeholder="Select Transaction Category"
-                            data={[
-                                { value: "food", label: "Food" },
-                                { value: "business", label: "Business" },
-                                { value: "personal", label: "Personal" },
-                                { value: "education", label: "Education" },
-                                { value: "entertainment", label: "Entertainment" },
-                                { value: "salary", label: "Salary" },
-                                { value: "shopping", label: "Shopping" },
-                                { value: "health", label: "Health" },
-                                { value: "travel", label: "Travel" },
-                                { value: "savings", label: "Savings" },
-                                { value: "loan", label: "Loan" },
-                            ]}
-                            {...transactionForm.getInputProps("category")}
-                        />
-                    </div>
-
-                    <div className="flex justify-between"> </div>
-                    <TextInput
-                        width="60%"
-                        name="date"
-                        type="date"
-                        label="Date"
-                        placeholder=" Enter Transaction Date"
-                        {...transactionForm.getInputProps("date")}
-
-                    />
-                    <div className="flex justify-between"></div>
-                    <TextInput
-                        width="60%"
-                        name="reference"
-                        label="Reference"
-                        placeholder=" Enter Transaction Reference"
-                        {...transactionForm.getInputProps("reference")}
-                    />
-
-
-                    <Button
-                        color="green" type="submit"> ADD</Button>
-
-                </Stack>
-            </form>
-        </div>
-    );
+          <Button color="cyan" type="submit">
+            {formMode === "add" ? "Add Transaction" : "Update Transaction"}
+          </Button>
+        </Stack>
+      </form>
+    </div>
+  );
 }
 
 export default TransactionForm;
