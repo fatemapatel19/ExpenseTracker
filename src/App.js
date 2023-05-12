@@ -1,4 +1,4 @@
-import { Loader } from "@mantine/core";
+// import { Loader } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -7,7 +7,7 @@ import Spinner from "./components/Spinner";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import HomePage from './components/HomePage';
+import HomePage from "./components/HomePage";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
@@ -18,17 +18,32 @@ function App() {
         </div>
       )}
       <BrowserRouter>
+        
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Home" element={<ProtectedRoute>  <Home /></ProtectedRoute>
-          } />
-          <Route path="/login" element={<PublicRoute>  <Login /></PublicRoute>
-
-          }
+          <Route path="/" element={<HomePage/>}/>
+          <Route
+            path="/Home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
           />
-
-          <Route path="/register" element={<PublicRoute> <Register /> </PublicRoute>
-          }
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
           />
         </Routes>
       </BrowserRouter>

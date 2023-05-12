@@ -7,7 +7,7 @@ import { Progress } from "@mantine/core";
 function Analytics({ transactions }) {
   const totalTransactions = transactions.length;
 
-  // transactions count
+  // transactions count logic
   const totalIncomeTransactions = transactions.filter(
     (transaction) => transaction.type === "income"
   ).length;
@@ -19,7 +19,7 @@ function Analytics({ transactions }) {
   const totalExpenseTransactionsPercentage =
     (totalExpenseTransactions / totalTransactions) * 100;
 
-  // total amount
+  // total amount formula
   const totalAmount = transactions.reduce((acc, transaction) => {
     return acc + Number(transaction.amount);
   }, 0);
@@ -93,7 +93,7 @@ function Analytics({ transactions }) {
         </div>
 
         <div className="total-turnover">
-          <h1 className="card-title">Total Turnover : {totalAmount}</h1>
+          <h1 className="card-title">Total Turnover : {totalAmount} </h1>
           <Divider my={20} />
           <p>Income : {totalIncomeAmount}</p>
           <p>Expense : {totalExpenseAmount}</p>
@@ -151,7 +151,7 @@ function Analytics({ transactions }) {
             return (
               <div>
                 <p>{category.label}</p>
-                <Progress
+                <Progress     //progress bar shows the progress in transactions
                   size={25}
                   color='teal'
                   value={incomeCategoryTransactionsPercentage}
@@ -163,7 +163,7 @@ function Analytics({ transactions }) {
         </div>
 
         <div className="expence-categories">
-          <h1 className="card-title">Expence Categories</h1>
+          <h1 className="card-title">Expense Categories</h1>
           <Divider my={20} />
           {categories.map((category) => {
             const expenceCategoryTransactionsAmount = transactions

@@ -15,8 +15,12 @@ import cryptojs from "crypto-js";
 import { showNotification } from "@mantine/notifications";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
+// import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import './Login';
 
 function Register() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const registerForm = useForm({
     initialValues: {
@@ -48,7 +52,7 @@ function Register() {
         // encrypt password
         const encryptedPassword = cryptojs.AES.encrypt(
           registerForm.values.password,
-          "Expenso"
+          "sheymoney-lite"
         ).toString();
         const response = await addDoc(collection(fireDb, "users"), {
           ...registerForm.values,
@@ -58,7 +62,9 @@ function Register() {
           showNotification({
             title: "User created successfully",
             color: "green",
-          });
+          }
+         )
+         navigate("/login");
         } else {
           showNotification({
             title: "Something went wrong",
@@ -77,6 +83,10 @@ function Register() {
   };
   return (
     <div className="flex h-screen justify-center items-center auth">
+      <div className="title-register"> <b> BUDGET <br/> TRACKING APP </b></div>
+      <div className="form-register">
+
+      
       <Card
         sx={{
           width: 400,
@@ -85,6 +95,7 @@ function Register() {
         shadow="lg"
         withBorder
       >
+      
         <Title order={2} mb={5} color='gray'>
            EXPENSO - REGISTER
         </Title>
@@ -119,6 +130,7 @@ function Register() {
           </Stack>
         </form>
       </Card>
+      </div>
     </div>
   );
 }

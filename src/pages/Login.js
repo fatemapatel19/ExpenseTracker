@@ -16,6 +16,7 @@ import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
+// import "../LoginBg.png";
 
 function Login() {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ function Login() {
         // decrypt password
         const decryptedPassword = cryptojs.AES.decrypt(
           existingUsers.docs[0].data().password,
-          "Expenso"
+          "sheymoney-lite"
         ).toString(cryptojs.enc.Utf8);
         if (decryptedPassword === loginForm.values.password) {
           showNotification({
@@ -77,15 +78,21 @@ function Login() {
   };
 
   return (
-    <div className="flex h-screen justify-center items-center auth">
+   
+    <div className="flex h-screen justify-center  items-center auth">
+       <div className="title"> <b> EXPENSE <br/>
+                               TRACKING APP </b></div>
+       <div className="form">
+       
       <Card
         sx={{
           width: 400,
+         
           padding: "sm",
         }}
         shadow="lg"
         withBorder
-      >
+       display="block">
         <Title order={2} mb={5}
          color="gray"
         >
@@ -116,6 +123,7 @@ function Login() {
           </Stack>
         </form>
       </Card>
+     </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Group, Table } from "@mantine/core";
+import {  Group, Table } from "@mantine/core";
 import React from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
@@ -14,6 +14,9 @@ function TransactionTable({
   setShowForm,
   getData,
 }) {
+  
+
+
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
   const deleteTransaction = async (id) => {
@@ -64,9 +67,13 @@ function TransactionTable({
     </tr>
   ));
 
+  
+
   return (
-    <Table verticalSpacing="md" fontSize="sm" striped>
-      <thead>
+    <div>
+     
+       <Table verticalSpacing="md" fontSize="sm" striped>
+       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
@@ -76,9 +83,15 @@ function TransactionTable({
           <th>Reference</th>
           <th>Actions</th>
         </tr>
-      </thead>
-      <tbody>{getRows}</tbody>
-    </Table>
+       </thead>
+       <tbody>{getRows}</tbody>
+    
+    
+    </Table> 
+   
+  
+   
+  </div>
   );
 }
 

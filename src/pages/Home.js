@@ -12,7 +12,9 @@ import Filters from "../components/Filters";
 import moment from "moment";
 import Analytics from "../components/Analytics";
 
+
 function Home() {
+  
   const [view, setView] = React.useState("table");
   const [filters, setFilters] = React.useState({
     type: "",
@@ -100,6 +102,7 @@ function Home() {
   }, [filters]);
 
   return (
+    
     <Box
      mx={50}
     >
@@ -114,6 +117,8 @@ function Home() {
                 getData={getData}
               />
             </div>
+
+            
             <Group>
               <Button.Group>
                 <Button
@@ -131,6 +136,7 @@ function Home() {
                   Analytics
                 </Button>
               </Button.Group>
+
               <Button
                 color="green"
                 onClick={() => {
@@ -161,8 +167,8 @@ function Home() {
         title={formMode === "add" ? "Add Transaction" : "Edit Transaction"}
         opened={showForm}
         onClose={() => setShowForm(false)}
-        centered
-      >
+        centered>
+      
         <TransactionForm
           formMode={formMode}
           setFormMode={setFormMode}
@@ -172,7 +178,9 @@ function Home() {
           getData={getData}
         />
       </Modal>
+   
     </Box>
+    
   );
 }
 

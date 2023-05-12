@@ -3,13 +3,13 @@ import {  } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyClepOaGsnIet8-MwzGc352dcfkoy5CqY",
-  authDomain: "expensetracker-962d6.firebaseapp.com",
-  projectId: "expensetracker-962d6",
-  storageBucket: "expensetracker-962d6.appspot.com",
-  messagingSenderId: "445461520758",
-  appId: "1:445461520758:web:1519646b1f518404aa9a57",
-  measurementId: "G-B8LEYFLS99"
+  apiKey: "AIzaSyC3wtpAUQR2nciMeiOrHdsfgGRCNYs_q2s",
+  authDomain: "expense-1e679.firebaseapp.com",
+  projectId: "expense-1e679",
+  storageBucket: "expense-1e679.appspot.com",
+  messagingSenderId: "768903734755",
+  appId: "1:768903734755:web:07027c719651756f7facd6",
+  measurementId: "G-S48267DX3B"
 };
 
 

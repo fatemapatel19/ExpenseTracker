@@ -13,11 +13,7 @@ function HomePage() {
                 <div className="navbar__menu">
                     <a href="#about-us">About Us</a>
                     <a href="#contact-us">Contact Us</a>
-                    <button color="green" >
-                    <Anchor href="/Login" >
-                    Join us
-                        </Anchor>
-                        </button>
+                    <button color="green" > <Anchor href = "/Home" >Join us </Anchor> </button>
                 </div>
             </nav>
             <h1 className="homepage__title">Welcome to EXPENSO Tracker App</h1>
@@ -87,7 +83,7 @@ function HomePage() {
             <p className="homepage__section-description">
                 If you have any questions or feedback, please don't hesitate to
                 get in touch with us. You can reach us by email at
-                <a href="mailto:support@expensetrackerapp.com">
+                <a href="Expenso:support@expensetrackerapp.com">
                     support@expensetrackerapp.com
                 </a>
                 or by phone at +1 (555) 123-4567.
